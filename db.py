@@ -1,11 +1,12 @@
 from flask_pymongo import pymongo
 from dotenv import dotenv_values
+import os
 
 def get_listings_collection():
     config = dotenv_values(".env")
-    CONNECTION_STRING = config["MONGODB_URI"]
+    DATABASE_URL = f'mongodb+srv://qlaueen:{os.environ.get("password")}@laigscrist.wbkqxu7.mongodb.net/?retryWrites=true&w=majority'
     try:
-        client = pymongo.MongoClient(CONNECTION_STRING)
+        client = pymongo.MongoClient(DATABASE_URL)
         db = client.get_database('laigscrist')
         return pymongo.collection.Collection(db, 'listings')
     except pymongo.errors.ConnectionFailure as e:
